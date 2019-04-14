@@ -1,0 +1,7 @@
+---
+
+# System dependencies
+system_dependencies:
+  - git-core
+  - python
+  - python-pip

@@ -1,0 +1,10 @@
+---
+
+- name: Update apt cache
+  become: yes
+  apt: update_cache=yes
+
+- name: Install system dependencies
+  become: yes
+  apt:
+    name: "{{ system_dependencies }}"

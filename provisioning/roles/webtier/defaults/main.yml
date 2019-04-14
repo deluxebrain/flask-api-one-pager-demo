@@ -1,0 +1,13 @@
+---
+
+# Configure shell
+init_shell: yes
+
+# Installation paths
+pyenv_home: "{{ ansible_env.HOME }}"
+pyenv_root: "{{ ansible_env.HOME }}/.pyenv"
+
+# Python versions to install
+python_versions:
+  - 3.7.2
+  - miniconda3-4.3.30

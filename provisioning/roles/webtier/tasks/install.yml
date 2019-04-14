@@ -1,0 +1,36 @@
+---
+
+- name: Ensure pyenv directory exists
+  file:
+    path: "{{ pyenv_root }}"
+    state: directory
+
+- name: Create .pyenvrc file
+  template:
+    src: ".pyenvrc.j2"
+    dest: "{{ pyenv_home }}/.pyenvrc"
+    mode: "0644"
+
+- name: Create .condarc file
+  template:
+    src: ".condarc.j2"
+    dest: "{{ pyenv_home }}/.condarc"
+    mode: "0644"
+  when: 'python_versions | select("search", "conda") | list'
+
+- name: Install Python interpreters
+  shell: . {{ pyenv_home }}/.pyenvrc && pyenv install {{ item }}
+  args:
+    creates: "{{ pyenv_root }}/versions/{{ item }}/bin/python"
+  with_items: "{{ python_versions }}"
+
+- name: Set global Python
+  shell: . {{ pyenv_home }}/.pyenvrc && pyenv global system
+
+- name: Install pipenv into the system python
+  pip:
+    name:
+      - pipenv
+    extra_args: --user
+  environment:
+      PATH: "{{ pyenv_home }}/.local/bin:{{ ansible_env.PATH}}"
