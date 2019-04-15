@@ -20,7 +20,7 @@ Vagrant.configure(VAGRANT_API_VERSION) do |config|
     config.vm.hostname = "flask-api-one-pager-demo"
 
     config.vm.network :forwarded_port, id: "flask",
-        guest: 5000, host: 5000, auto_correct: true
+        guest: 5000, host: 8080, auto_correct: true
 
     # Fix `stdin: is not a tty` warning
     # https://github.com/hashicorp/vagrant/issues/1673

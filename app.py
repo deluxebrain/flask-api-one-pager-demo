@@ -16,10 +16,10 @@ spec = APISpec(
       MarshmallowPlugin(),
    ]
 )
-
 app = Flask(__name__)
 api = Blueprint('api', __name__, url_prefix="/api")
 ma = Marshmallow(app)
+ma.init_app(app)
 
 class User(object):
     def __init__(self, name, email):
@@ -82,7 +82,6 @@ def get_swagger():
     return jsonify(spec.to_dict())
 
 app.register_blueprint(api)
-ma.init_app(app)
 
 with app.test_request_context():
     spec.path(view=user_detail)
